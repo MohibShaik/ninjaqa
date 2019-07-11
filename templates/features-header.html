@@ -1,0 +1,21 @@
+<div class="panel-heading">
+    <h4 class="panel-title">
+        <div class="tags"> 
+            <span class="tag">
+                {% ifequal feature.status 'passed' %}
+                @happy
+                {% endifequal %}
+                {%ifequal feature.status 'failed' %}
+                @unhappy
+                {% endifequal %}
+            </span> <span class="tag">@reporting</span> </div>
+        <a data-toggle="collapse" href="#feature-{{ forloop.counter }}">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="glyphicon glyphicon-chevron-down"></i>
+            <b>Feature:</b> {{feature.name}} <br/> <center><i>{{feature.location }}</i></center>
+            <span class="label-container">
+                <span class="label label-{% ifequal feature.status "passed" %}success{% endifequal%}{% ifequal feature.status "failed" %}danger{% endifequal %}">{{feature.elements | length}}</span>
+            </span>
+        </a>
+    </h4>
+</div>

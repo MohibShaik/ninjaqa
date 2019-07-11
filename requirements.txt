@@ -1,0 +1,6 @@
+behave==1.2.6
+# not needed : with fabric + behave -f json  will do
+#allure-behave==2.6.5
+selenium==3.141.0
+django==2.2.2
+#fabric==2.4.0

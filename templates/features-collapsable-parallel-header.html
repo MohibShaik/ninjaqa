@@ -1,0 +1,43 @@
+<div id="feature-{{ forloop.counter }}" class="panel-collapse collapse">
+  <div class="panel-body">
+    {% for scenario in feature.elements %}
+    
+    <!-- <div class="description"> {{feature.location }} </div> -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <div class="tags"> <span class="tag"> @testPassing</span> </div>
+          <a data-toggle="collapse" href="#collapseScenario{{forloop.parentloop.counter}}_{{forloop.counter}}">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="glyphicon glyphicon-chevron-down"></i>
+            <b>Scenario:</b><span> {{scenario.name}} <br /> </span>
+            <span class="label-container">
+              <span class="label label-{% ifequal scenario.status "passed" %}success{% endifequal%}{% ifequal scenario.status "failed" %}danger{% endifequal %}" title="Passed">{{scenario.steps|length}}</span>
+            </span>
+          </a>
+        </h4>
+      </div>
+      <div id="collapseScenario{{forloop.parentloop.counter}}_{{forloop.counter}}" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="description" id="scenario-description">{{scenario.location }}</div>
+          {% for step in scenario.steps %}
+          <p class="scenario-container">
+            <span class="label label-{% ifequal step.result.status "passed" %}success{% endifequal%}{% ifequal step.result.status "failed" %}danger{% endifequal %}" title="Success"><i class="glyphicon {% ifequal step.result.status "passed" %}glyphicon-ok{% endifequal%}{% ifequal step.result.status "failed" %} glyphicon-remove {% endifequal%}"></i></span>
+            <span class="text">
+              <span class="keyword highlight">{{step.name}} </span>
+              <span class="step-duration">
+                {{step.result.duration | floatformat:4 }}s
+              </span>
+              {% ifequal step.result.status "failed" %}
+              <pre>{% for message in step.result.error_message%}
+{{message}}{% endfor %}</pre>
+              {% endifequal %}
+            </span>
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

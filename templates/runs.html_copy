@@ -1,0 +1,1578 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="container">
+  <div>
+    <div id="json-container">
+      <select id="report-select">
+        <option> -- Select Report -- </option>
+        {% for report in reports %}
+        {% if report.id == run_id %}
+        <option value='{{report.id}}' selected>{{report.report_file}} - {{report.report_name}}</option>
+        {% else %}
+        <option value='{{report.id}}'>{{report.report_file}} - {{report.report_name}}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+
+  </div>
+  <div class="generated-on">
+    {{this.date}}
+  </div>
+  <div class="row">
+    <div class="chart col-lg-6 col-md-6" id="piechart_features"></div>
+    <div class="chart col-lg-6 col-md-6" id="piechart_scenarios"></div>
+  </div>
+
+
+  <!-- Metadata starts -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#logOutput">
+          <i class="glyphicon glyphicon-chevron-right"></i>
+          <i class="glyphicon glyphicon-chevron-down"></i>
+          <b>Metadata</b>
+        </a>
+      </h4>
+    </div>
+    <div id="logOutput" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="clearfix metadata col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class=left>
+              <strong> Project: </strong>{{environment.project}}
+            </div>
+          </div>
+          <div class="clearfix metadata col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class=pull-right-lg>
+              <strong> Test Environment: </strong>{{environment.environment}}
+            </div>
+          </div>
+          <div class="clearfix metadata col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class=left>
+              <strong> Browser Driver:</strong>{{environment.driver}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Metadata ends -->
+
+
+
+  <!-- Right Panel-->
+  <div class="row">
+    <div class="col-lg-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <div class="tags"> <span class="tag">@happy</span> <span class="tag">@reporting</span> </div>
+            <a data-toggle="collapse" href="#collapseFeature0">
+              <i class="glyphicon glyphicon-chevron-right"></i>
+              <i class="glyphicon glyphicon-chevron-down"></i>
+              <b>Feature:
+                {% for key in report_json %}
+                {% if "passed" in key.status %}
+                {{ key.name }}
+                {% endif %}
+                {% endfor %}
+
+              </b>
+              <span class="label-container">
+                <span class="label label-success"></span>
+              </span>
+            </a>
+          </h4>
+        </div>
+
+
+
+
+        <div id="collapseFeature0" class="panel-collapse collapse">
+          <div class="panel-body">
+            <div class="description"> </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @testPassing</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario0_0">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b><span>
+                      {% for feature in report_json %}
+                      {% for scenario in feature.elements %}
+                      {% if "passed" in scenario.status %}
+                      {{scenario.name}}
+                      {% endif %}
+                      {% endfor %}
+                      {% endfor %}
+                    </span>
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario0_0" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight">
+                        {% for feature in report_json %}
+                        {% for scenario in feature.elements %}
+                        {% if "passed" in scenario.status%}
+                        {% for key in scenario.steps%}
+                        <h4><span class="label label-success" title="Success"><i
+                              class="glyphicon glyphicon-ok"></i></span> {{key.keyword}} {{key.name}} </h4>
+                        {% endfor %}
+                        {%endif%}
+                        {% endfor %}
+                        {% endfor %}
+                      </span>
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                    <a href="#info0_01" data-toggle="collapse"></a>
+                    <div id="info0_01" class="collapse">
+                      <pre class=info><br></pre>
+                    </div>
+                  </p>
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span class="text"> -->
+                    <span class="keyword highlight"> </span>
+
+
+                    <span class="step-duration">
+
+                    </span>
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @testScenarioOutline</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario0_2">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario Outline:</b>
+                    {% for mainkey in report_json %}
+                    {% for key in mainkey.elements %}
+                    {% if "passed" in key.status %}
+                    {{key.name}}
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+
+
+
+
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario0_2" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="description" id="scenario-description"><br />
+                  </div>
+
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight"></span>
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+
+
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> </span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario0_3">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b></b>
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+
+
+
+
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario0_3" class="panel-collapse collapse">
+                <div class="panel-body">
+
+
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+                      
+
+                      <span class="step-duration">
+                        
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+                     
+
+                      <span class="step-duration">
+                        
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+                    <a href="#info0_32" data-toggle="collapse">+ Show Info</a>
+                    <div id="info0_32" class="collapse">
+                      <pre class=info><br></pre>
+                    </div>
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"></span>
+                     
+
+                      <span class="step-duration">
+                        
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+                      
+
+                      <span class="step-duration">
+                      </span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @testDocStrings</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario0_4">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b> These are the steps with DocString
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+
+
+
+
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario0_4" class="panel-collapse collapse">
+                <div class="panel-body">
+
+
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+                      <div class="scrollBar">
+
+                      </div>
+
+                      <pre class=info></pre>
+
+
+
+
+                    </span>
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+                    <!-- 
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+                  </p>
+
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @testDataTable</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario0_5">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b> These are the stepa with Table
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario0_5" class="panel-collapse collapse">
+                <div class="panel-body">
+
+
+
+
+
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Left Panel -->
+
+
+
+
+
+
+
+
+    <div class="col-lg-6 col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <div class="tags"> <span class="tag">@unhappy</span> <span class="tag">@reporting</span> </div>
+            <a data-toggle="collapse" href="#collapseFeature1">
+              <i class="glyphicon glyphicon-chevron-right"></i>
+              <i class="glyphicon glyphicon-chevron-down"></i>
+              <b>Feature:</b>
+              {% for key in report_json %}
+              {% if "failed" in key.status %}
+              {{ key.name }}
+              {% endif %}
+              {% endfor %}
+              <span class="label-container">
+                <span class="label label-success"></span>
+
+                <span class="label label-info"></span>
+
+                <span class="label label-warning"></span>
+              </span>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFeature1" class="panel-collapse collapse">
+          <div class="panel-body">
+
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @attachScreenshot</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario1_0">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b>
+                    {% for feature in report_json %}
+                    {% for scenario in feature.elements %}
+                    {% if "failed" in scenario.status %}
+                    {{scenario.name}}
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario1_0" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="scenario-container">
+
+                    <span class="keyword highlight">
+                      {% for feature in report_json %}
+                      {% for scenario in feature.elements %}
+                      {% if "failed" in scenario.status%}
+                      {% for key in scenario.steps%}
+
+                      <h4><span class="label label-success" title="Success"><i
+                            class="glyphicon glyphicon-ok"></i></span> {{key.keyword}} {{key.name}} </h4>
+
+                      {% endfor %}
+                      {%endif%}
+                      {% endfor %}
+                      {% endfor %}
+                    </span>
+
+                    <span class="step-duration">
+                      {% for x in report_json.elements.steps.0%}
+
+                      <h1>{{x.name}}</h1>
+
+                      {% endfor %}
+                    </span>
+
+                  </p>
+
+
+                  <!-- 
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                  <!-- <span class="text">
+                      <span class="keyword highlight">When </span>
+                      he provides Behave JSON file to reporter
+                      <span class="step-duration">
+                        0s
+                      </span>
+                    </span>
+                  </p> -->
+
+
+                  <!-- 
+                  <p class="scenario-container"> -->
+
+
+                  <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+                  <!-- 
+                    <span class="text">
+                      <span class="keyword highlight">And </span>
+                      a failing scenario captures a screenshot
+
+                      <span class="step-duration">
+                        0s
+                      </span>
+
+
+
+
+                    </span> -->
+
+
+
+                  <!-- </p> -->
+                  <p class="scenario-container">
+                    <span class="label label-danger" title="danger"><i class="glyphicon glyphicon-remove"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight">Error_message </span>
+                      <pre
+                        class="pre">{% for feature in report_json %}{% for scenario in feature.elements %}{% for key in scenario.steps%}{% for res in key.result.error_message %}{{res}}<br/>{% endfor %}{% endfor %}{% endfor %}{% endfor %}</pre>
+
+                      <span class="step-duration">
+
+
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <!-- <div class="tags"> <span class="tag"> @pendingStep</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario1_1">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b>
+                    <span class="label-container">
+                      <!-- <span class="label label-success" title="Passed">2</span>
+                      <span class="label label-info" title="Undefined">1</span> -->
+
+                  <span class="label label-warning" title="Skipped"></span>
+
+                  </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario1_1" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="scenario-container">
+
+
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+
+                      <span class="step-duration">
+
+                      </span>
+
+
+
+
+                    </span>
+
+
+
+
+
+
+
+
+
+
+                  </p>
+
+
+
+                  <p class="scenario-container">
+
+
+                    <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+
+
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                    </span>
+                    -->
+
+                    <!-- <pre class=info>
+this.Then(/^he left this step as a pending$/, function(callback) {
+  // Write code here that turns the phrase above into concrete actions
+  callback(null, 'pending');
+});
+                        </pre> -->
+
+
+
+
+
+
+
+
+
+                  </p>
+                  <p class="scenario-container">
+                    <span class="label label-warning" title="Skipped"><i class="glyphicon glyphicon-minus"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @undefinedStep</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario1_2">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b> These steps are undefined
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+                      <span class="label label-info" title="Undefined"></span>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario1_2" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="scenario-container">
+                    <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"></span>
+
+                    </span>
+                    <pre class=info>
+
+                        </pre>
+                  </p>
+                  <p class="scenario-container">
+                    <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                    </span>
+                    <pre class=info>
+
+                        </pre>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div class="tags"> <span class="tag"> @skippedStep</span> </div>
+                  <a data-toggle="collapse" href="#collapseScenario1_3">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    <i class="glyphicon glyphicon-chevron-down"></i>
+                    <b>Scenario:</b> These steps are skipped during Execution
+                    <span class="label-container">
+                      <span class="label label-success" title="Passed"></span>
+                      <span class="label label-info" title="Penddding"></span>
+                      <span class="label label-warning" title="Skipped"></span>
+                    </span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseScenario1_3" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="scenario-container">
+                    <!-- <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span> -->
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                      <span class="step-duration">
+
+                      </span>
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                    </span>
+                  </p>
+                  <p class="scenario-container">
+                    <span class="label label-warning" title="Skipped"><i class="glyphicon glyphicon-minus"></i></span>
+                    <span class="text">
+                      <span class="keyword highlight"> </span>
+
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navbar-fixed-bottom row-fluid footer-div ">
+  <div class="navbar-inner">
+    <div class="footer-container">
+      <a target="_blank" href="https://www.npmjs.com/package/cucumber-html-reporter">
+        <div class="text-muted footer-link">
+          generated by @cucumber-html-reporter
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+  google.load("visualization", "1", { packages: ["corechart"] });
+  google.setOnLoadCallback(function () {
+    drawChart({
+      "title": "Features",
+      "failed": Number("{{failed_report_json}}"),
+      "passed": Number("{{passed_report_json}}"),
+    })
+  });
+
+  google.setOnLoadCallback(function () {
+    drawChart({
+      "title": "Scenarios",
+      "failed": Number("{{failed_scenario_count}}"),
+      "passed": Number("{{passed_scenario_count}}"),
+      "skipped": Number("{{skipped_scenario_count}}")
+    })
+  });
+</script>
+<script>
+
+
+
+
+  $(document).ready(function () {
+
+    $('.collapse').on('hide.bs.collapse', function (e) {
+      e.stopPropagation();
+      $(this).prev().removeClass('open');
+    }).on('show.bs.collapse', function (e) {
+      e.stopPropagation();
+      $(this).prev().addClass('open');
+    });
+
+    $('a.toggle').on('click', function () {
+      if ($(this).text() === 'Screenshot -') {
+        $(this).text('Screenshot +');
+        $(this).siblings('a.screenshot').find('img').hide();
+      } else {
+        $(this).text('Screenshot -');
+        $(this).siblings('a.screenshot').find('img').show();
+      }
+    });
+    var $generated = $('.generated-on');
+    $generated.text('Generated ' + moment($generated.text()).fromNow());
+
+    // bind change event to select
+    $('#report-select').on('change', function () {
+      debugger;
+      var url = $(this).val(); // get selected value
+      if (url) { // require a URL
+        window.location = url; // redirect
+      }
+      return false;
+    });
+
+
+  });
+
+  function drawChart(chartData) {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Cucumber Results'],
+      ['Passed', chartData.passed],
+      ['Failed', chartData.failed],
+
+      ['Skipped', chartData.skipped]
+    ]);
+
+    var total = chartData.passed + chartData.failed + (chartData.notdefined || 0) + (chartData.skipped || 0);
+    var title;
+
+    if (total === 1) {
+      title = total + ' ' + chartData.title.slice(0, -1)
+    } else {
+      title = total + ' ' + chartData.title;
+    }
+
+    var options = {
+      width: '100%',
+      height: 240,
+      title: title,
+      is3D: true,
+      colors: ['#5cb85c', '#d9534f', '#5bc0de', '#f0ad4e'],
+      fontSize: '13',
+      fontName: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
+      slices: {
+        1: { offset: 0.4 },
+        2: { offset: 0.4 },
+        3: { offset: 0.4 }
+      },
+      titleTextStyle: {
+        fontSize: '13',
+        color: '#5e5e5e'
+      }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_' + chartData.title.toLowerCase()));
+    chart.draw(data, options);
+  }
+</script>
+
+
+
+</p>
+
+
+
+<p class="scenario-container">
+
+
+  <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+  <span class="text">
+    <span class="keyword highlight">Then </span>
+    cucumber-html-reporter should create HTML report with Screenshot
+
+    <span class="step-duration">
+      0s
+    </span>
+
+
+
+
+  </span>
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+</div>
+</div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <div class="tags"> <span class="tag"> @pendingStep</span> </div>
+      <a data-toggle="collapse" href="#collapseScenario1_1">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        <i class="glyphicon glyphicon-chevron-down"></i>
+        <b>Scenario:</b>Fred wants to see if steps are pending in the HTML report
+        <span class="label-container">
+          <span class="label label-success" title="Passed">2</span>
+          <span class="label label-info" title="Undefined">1</span>
+
+          <span class="label label-warning" title="Skipped">1</span>
+
+        </span>
+      </a>
+    </h4>
+  </div>
+  <div id="collapseScenario1_1" class="panel-collapse collapse">
+    <div class="panel-body">
+
+
+
+
+
+      <p class="scenario-container">
+
+
+        <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+
+
+        <span class="text">
+          <span class="keyword highlight">Given </span>
+          Fred runs a cucumber scenario
+
+          <span class="step-duration">
+            0s
+          </span>
+
+
+
+
+        </span>
+
+
+
+
+
+
+
+
+
+
+      </p>
+
+
+
+      <p class="scenario-container">
+
+
+        <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+
+
+        <span class="text">
+          <span class="keyword highlight">When </span>
+          he left this step as a pending
+
+
+
+
+        </span>
+
+
+        <pre class=info>
+this.Then(/^he left this step as a pending$/, function(callback) {
+  // Write code here that turns the phrase above into concrete actions
+  callback(null, 'pending');
+});
+                        </pre>
+
+
+
+
+
+
+
+
+
+      </p>
+      <p class="scenario-container">
+        <span class="label label-warning" title="Skipped"><i class="glyphicon glyphicon-minus"></i></span>
+        <span class="text">
+          <span class="keyword highlight">Then </span>
+          cucumber-html-reporter should report pending step with code-snippets in HTML report
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <div class="tags"> <span class="tag"> @undefinedStep</span> </div>
+      <a data-toggle="collapse" href="#collapseScenario1_2">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        <i class="glyphicon glyphicon-chevron-down"></i>
+        <b>Scenario:</b>Fred wants to see if steps are undefined on the HTML report
+        <span class="label-container">
+          <span class="label label-success" title="Passed">2</span>
+          <span class="label label-info" title="Undefined">2</span>
+        </span>
+      </a>
+    </h4>
+  </div>
+  <div id="collapseScenario1_2" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p class="scenario-container">
+        <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+        <span class="text">
+          <span class="keyword highlight">Given </span>
+          Fred runs a cucumber scenario
+          <span class="step-duration">
+            0s
+          </span>
+        </span>
+      </p>
+      <p class="scenario-container">
+        <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+        <span class="text">
+          <span class="keyword highlight">When </span>
+          he left this step as a undefined
+        </span>
+        <pre class=info>
+this.Then(/^he left this step as a undefined$/, function(callback) {
+  // Write code here that turns the phrase above into concrete actions
+  callback(null, 'pending');
+});
+                        </pre>
+      </p>
+      <p class="scenario-container">
+        <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+        <span class="text">
+          <span class="keyword highlight">Then </span>
+          cucumber-html-reporter should create undefined step in HTML report
+        </span>
+        <pre class=info>
+this.Then(/^cucumber-html-reporter should create undefined step in HTML report$/, function(callback) {
+  // Write code here that turns the phrase above into concrete actions
+  callback(null, 'pending');
+});
+                        </pre>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <div class="tags"> <span class="tag"> @skippedStep</span> </div>
+      <a data-toggle="collapse" href="#collapseScenario1_3">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        <i class="glyphicon glyphicon-chevron-down"></i>
+        <b>Scenario:</b>Fred wants to see if steps are skipped on the HTML report
+        <span class="label-container">
+          <span class="label label-success" title="Passed">2</span>
+          <span class="label label-info" title="Penddding">1</span>
+          <span class="label label-warning" title="Skipped">1</span>
+        </span>
+      </a>
+    </h4>
+  </div>
+  <div id="collapseScenario1_3" class="panel-collapse collapse">
+    <div class="panel-body">
+      <p class="scenario-container">
+        <span class="label label-success" title="Success"><i class="glyphicon glyphicon-ok"></i></span>
+        <span class="text">
+          <span class="keyword highlight">Given </span>
+          Fred runs a cucumber scenario
+          <span class="step-duration">
+            0s
+          </span>
+        </span>
+      </p>
+      <p class="scenario-container">
+        <span class="label label-primary" title="Undefined"><i class="glyphicon glyphicon-flash"></i></span>
+        <span class="text">
+          <span class="keyword highlight">When </span>
+          he throws the pending exception from this step
+        </span>
+      </p>
+      <p class="scenario-container">
+        <span class="label label-warning" title="Skipped"><i class="glyphicon glyphicon-minus"></i></span>
+        <span class="text">
+          <span class="keyword highlight">Then </span>
+          cucumber-html-reporter should create HTML report with skipped and pending steps
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="navbar-fixed-bottom row-fluid footer-div ">
+  <div class="navbar-inner">
+    <div class="footer-container">
+      <a target="_blank" href="https://www.npmjs.com/package/cucumber-html-reporter">
+        <div class="text-muted footer-link">
+          generated by @cucumber-html-reporter
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", { packages: ["corechart"] });
+  google.setOnLoadCallback(function () {
+    drawChart({
+      "title": "Features",
+      "failed": 0,
+      "passed": 2
+    })
+  });
+  google.setOnLoadCallback(function () {
+    drawChart({
+      "title": "Scenarios",
+      "failed": 0,
+      "passed": 7,
+      "notdefined": 2,
+      "skipped": 1
+    })
+  });
+</script>
+<script>
+
+
+
+
+  $(document).ready(function () {
+    $.ajax({
+      url: "localhost:8000/get_chart_data/",
+      method: "GET", success: function (result) {
+        console.log(result);
+      }
+    });
+    $('.collapse').on('hide.bs.collapse', function (e) {
+      e.stopPropagation();
+      $(this).prev().removeClass('open');
+    }).on('show.bs.collapse', function (e) {
+      e.stopPropagation();
+      $(this).prev().addClass('open');
+    });
+
+    $('a.toggle').on('click', function () {
+      if ($(this).text() === 'Screenshot -') {
+        $(this).text('Screenshot +');
+        $(this).siblings('a.screenshot').find('img').hide();
+      } else {
+        $(this).text('Screenshot -');
+        $(this).siblings('a.screenshot').find('img').show();
+      }
+    });
+    var $generated = $('.generated-on');
+
+    $generated.text('Generated ' + moment($generated.text()).fromNow());
+
+
+
+    // bind change event to select
+    $('#report-select').on('change', function () {
+      debugger;
+      var url = $(this).val(); // get selected value
+      if (url) { // require a URL
+        window.location = url; // redirect
+      }
+      return false;
+    });
+
+
+  });
+
+  function drawChart(chartData) {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Cucumber Results'],
+      ['Passed', chartData.passed],
+      ['Failed', chartData.failed],
+      ['Pending', chartData.notdefined],
+      ['Skipped', chartData.skipped]
+    ]);
+
+    var total = chartData.passed + chartData.failed + (chartData.notdefined || 0) + (chartData.skipped || 0);
+    var title;
+
+    if (total === 1) {
+      title = total + ' ' + chartData.title.slice(0, -1)
+    } else {
+      title = total + ' ' + chartData.title;
+    }
+
+    var options = {
+      width: '100%',
+      height: 240,
+      title: title,
+      is3D: true,
+      colors: ['#5cb85c', '#d9534f', '#5bc0de', '#f0ad4e'],
+      fontSize: '13',
+      fontName: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
+      slices: {
+        1: { offset: 0.4 },
+        2: { offset: 0.4 },
+        3: { offset: 0.4 }
+      },
+      titleTextStyle: {
+        fontSize: '13',
+        color: '#5e5e5e'
+      }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_' + chartData.title.toLowerCase()));
+    chart.draw(data, options);
+  }
+</script>
+{% endblock %}

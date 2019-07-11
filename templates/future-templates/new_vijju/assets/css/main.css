@@ -1,0 +1,28 @@
+.navbar {
+    min-height: 70px;
+}
+
+.mt-1 {
+  margin-top: 30 !important;
+}
+
+
+[data-toggle="collapse"] .fa:before {  
+  content: "\f139";
+  right:0;
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+  content: "\f13a";
+}
+.generated-on {
+    text-align: right;
+    padding-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+}
