@@ -76,6 +76,8 @@ def placeholder(field, placeholder=''):
 
 
 def sidebar_menu_setting():
+    print("getattr(settings, 'BOOTSTRAP_ADMIN_SIDEBAR_MENU', True)", \
+        getattr(settings, 'BOOTSTRAP_ADMIN_SIDEBAR_MENU', True))
     return getattr(settings, 'BOOTSTRAP_ADMIN_SIDEBAR_MENU', True)
 
 

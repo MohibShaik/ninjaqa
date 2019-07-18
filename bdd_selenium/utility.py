@@ -30,8 +30,11 @@ def click(element, wait_after_click=None):
     if wait_after_click:
         time.sleep(wait_after_click)
 
-def select(element,wait_after_click=None):
-    getattr(element,'select')()
+def clear_element(element,wait_after_click=None):
+    getattr(element,'clear')()
+    if wait_after_click:
+        time.sleep(wait_after_click)
+
 
 
     

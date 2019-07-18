@@ -76,6 +76,18 @@ def get_elements(config_key, key, parent_element=None):
 def escape():
     from base import driver
     return webdriver.ActionChains(driver).send_keys(Keys.TAB).perform()
+
+def clear():
+    from base import driver
+    return webdriver.ActionChains(driver).send_keys(data).perform()
+
+
+def clear_element(element,wait_after_click=None):
+    getattr(element,'clear')()
+    if wait_after_click:
+        time.sleep(wait_after_click)
+
+
     
 #########################################
 
@@ -98,16 +110,25 @@ def step_impl(context ,page_name):
 
 @then(u'fill {element_name} with {element_value} value')
 def step_impl(context, element_name, element_value):
-     element=get_element(global_var['elements'][element_name])
-     element.send_keys(global_var['data'][element_value])
-     time.sleep(2)
+    
+    element=get_element(global_var['elements'][element_name])
+    element.send_keys(global_var['data'][element_value])
+    
+    time.sleep(2)
+
+
+
+    
+
 
 
 
 @then(u'click {element_name}')
 def step_impl(context, element_name):
-     element=get_element(global_var['elements'][element_name])
-     element.click()
+    element=get_element(global_var['elements'][element_name])
+    element.click()
+    time.sleep(1)
+    
     
 
 @then(u'select {element_value}')
@@ -117,19 +138,18 @@ def step_impl(context,element_value):
      element.send_keys(Keys.ESCAPE)
      time.sleep(1)
 
-     
-     
-     
-     
+
+
+@then(u'add {element_name} with {element_value} value')
+def step_impl(context,element_name,element_value):
+    element=get_element(global_var['elements'][element_name])
+    element.clear()
+    element.send_keys(global_var['data'][element_value])
+    element.send_keys(Keys.ESCAPE)
+    time.sleep(1)
+
+
+   
 
       
-
-
-# @then(u'check text of {element_name} equal to {element_value}')
-# def step_impl(context, element_name, element_value):
-#      element=get_element(global_var['elements'][element_name])
-#      assert element.text == global_var['data'][element_value]
-
-
-
 
