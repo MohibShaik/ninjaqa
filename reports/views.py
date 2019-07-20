@@ -18,9 +18,7 @@ try:
     global_project = Project.objects.get(name=environment['project'])
     global_environment = Environment.objects.get(project=project, environment=environment['environment'])
 except:
-    
 	pass
-
 from django.contrib.auth.decorators import login_required
 @login_required
 def runs(request, run_id=None):
@@ -31,6 +29,8 @@ def runs(request, run_id=None):
     print(bdd_path)
     if run_id:
         report = Report.objects.get(pk=run_id)
+        print("..............................")
+        print(report)
         with open(bdd_path+report.report_file) as f:
             report_json = eval(f.read())
             failed_features = len([e for e in report_json if e['status']=='failed'])

@@ -1,12 +1,12 @@
 import requests
 
 def mohib(verb,url,api_endpoint):
-    if verb=='GET':
+    if request.method=='GET':
         url+=api_endpoint
         response=requests.request(verb,url=url)
-        print(url)
-        print(verb)
-        return response
+        json_data=response.json()
+        
+        return json_data
 
     elif verb=="POST":
         url+=api_endpoint

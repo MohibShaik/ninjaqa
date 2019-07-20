@@ -31,3 +31,20 @@ class Environment(models.Model):
     base_url = models.URLField(max_length=256)
     def __str__(self):
         return self.environment # "%s (%s)" % (self.environment, self.project.name) 
+
+
+class ApiData(models.Model):
+    api_endpoint=models.CharField(max_length=100)
+    request_method=models.CharField(max_length=10, choices=REQUEST_TYPE)
+    def __str__(self):
+
+        return self.api_endpoint
+
+class Query_params(models.Model):
+    environment=models.ForeignKey(Environment,on_delete=models.CASCADE)
+    key = models.CharField(max_length=100)
+    value = models.CharField(max_length=1024)
+
+    def __str__(self):
+
+        return self.key + "(" + str(self.environment) + " )"
