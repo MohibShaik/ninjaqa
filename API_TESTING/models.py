@@ -30,7 +30,7 @@ class Environment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     base_url = models.URLField(max_length=256)
     def __str__(self):
-        return self.environment # "%s (%s)" % (self.environment, self.project.name) 
+        return self.base_url # "%s (%s)" % (self.environment, self.project.name) 
 
 
 class ApiData(models.Model):
@@ -38,7 +38,7 @@ class ApiData(models.Model):
     request_method=models.CharField(max_length=10, choices=REQUEST_TYPE)
     def __str__(self):
 
-        return self.api_endpoint
+        return self.request_method
 
 class Query_params(models.Model):
     environment=models.ForeignKey(Environment,on_delete=models.CASCADE)

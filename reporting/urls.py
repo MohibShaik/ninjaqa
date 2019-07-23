@@ -17,7 +17,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from django.urls import path
 from reports.views import  run_test_case, runs,runsuite
-from API_TESTING.views import home
+from API_TESTING.views import test
 admin.site.site_header = "QA-Ninja"
 admin.site.site_title = "QA-Ninja"
 admin.site.index_title = ""
@@ -32,6 +32,6 @@ urlpatterns = [
     path('runs/<run_id>', runs,name= 'Home'),
     path('run/', run_test_case,name= 'run_test_case'),
     path('runsuite/', runsuite,name= 'runsuite'),
-    path('test/',test,name='home')
+    path('test/<run_id>',test,name='test')
     
 ]

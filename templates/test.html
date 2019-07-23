@@ -1,48 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div>
+        <p>{{json_data}}</p>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>API - TESTING</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-    <form action="/action_page.php">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-8">
-                    <div>
-                        <select class="col-2" placeholder="get">
-                            <option>Get</option>
-                        </select>
-                        <input class="col-6" type="text" class="inputField" name="url" />
-                    </div>
-                </div>
-                <!-- <div class="col-6" style="">
-                <div>
-                   
-                </div>
-            </div> -->
-                <div class="col-2">
-                    <select>
-                        <option>Send</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                    <select>
-                        <option>Send</option>
-                    </select>
-                </div>
-            </div>
         </div>
-    </form>
-
-</body>
+    </div>
+</div>
+{% endblock %}
 
 </html>
