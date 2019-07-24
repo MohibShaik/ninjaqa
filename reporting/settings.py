@@ -30,6 +30,7 @@ LOGIN_URL='/admin/login/'
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'bootstrap_admin', # 3rd Party app
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'configuration',
     'reports',
-    'API_TESTING'
+    'API_TESTING',
+
 ]
 
 MIDDLEWARE = [

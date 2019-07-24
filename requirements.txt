@@ -3,4 +3,5 @@ behave==1.2.6
 #allure-behave==2.6.5
 selenium==3.141.0
 django==2.2.2
+djangorestframework==3.10.1
 #fabric==2.4.0

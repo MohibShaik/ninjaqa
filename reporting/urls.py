@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.views.generic import TemplateView
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from reports.views import  run_test_case, runs,runsuite
-from API_TESTING.views import test
+
+# from API_TESTING.views import test
 admin.site.site_header = "QA-Ninja"
 admin.site.site_title = "QA-Ninja"
 admin.site.index_title = ""
@@ -25,6 +26,7 @@ admin.site.index_title = ""
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls'))
     # Original Template taken from https://github.com/gkushang/cucumber-html-reporter
     path('template/', TemplateView.as_view(template_name='cucumber_report_bootstrap.html')),
     path('', runs,name= 'Home'),
@@ -32,6 +34,9 @@ urlpatterns = [
     path('runs/<run_id>', runs,name= 'Home'),
     path('run/', run_test_case,name= 'run_test_case'),
     path('runsuite/', runsuite,name= 'runsuite'),
-    path('test/<run_id>',test,name='test')
-    
+    # path('test/<run_id>',test,name='test'),
+    path('api/', include('reporting.API_TESTING.urls')),
 ]
+
+    
+
