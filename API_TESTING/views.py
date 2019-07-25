@@ -3,13 +3,14 @@ from django.template.response import TemplateResponse
 from django.http import HttpResponse
 import json
 from reports.models import Report
-from API_TESTING.models import Project,Environment,ApiData,Query_params
+from .models import Project,Environment,ApiData,Query_params
 from .serializers import ProjectSerializer, EnvironmentViewSet, ApiDataViewSet, Query_paramsViewSet
 import os
 import subprocess
 from django.http import JsonResponse
 from datetime import datetime
 import requests
+from rest_framework import viewsets
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
