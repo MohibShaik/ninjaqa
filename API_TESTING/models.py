@@ -16,7 +16,7 @@ ENVIRONMENT_TYPE_CHOICES = [
     ['prod','Production'],
 ]
 
-class Project(models.Model):
+class project(models.Model):
     name = models.CharField(max_length=100)
     desc = models.CharField(max_length=256)
 
@@ -25,23 +25,23 @@ class Project(models.Model):
 
 
 
-class Environment(models.Model):
+class environment(models.Model):
     environment =models.CharField(max_length=10, choices=ENVIRONMENT_TYPE_CHOICES)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(project, on_delete=models.CASCADE)
     base_url = models.URLField(max_length=256)
     def __str__(self):
         return self.base_url
 
 
-class ApiData(models.Model):
+class apiData(models.Model):
     api_endpoint=models.CharField(max_length=100)
     request_method=models.CharField(max_length=10, choices=REQUEST_TYPE)
     def __str__(self):
 
         return'{} {}'.format(self.api_endpoint, self.request_method)
 
-class Query_params(models.Model):
-    environment=models.ForeignKey(Environment,on_delete=models.CASCADE)
+class query_params(models.Model):
+    environment=models.ForeignKey(environment,on_delete=models.CASCADE)
     key = models.CharField(max_length=100)
     value = models.CharField(max_length=1024)
 

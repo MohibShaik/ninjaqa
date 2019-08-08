@@ -2,34 +2,34 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.http import HttpResponse
 import json
-from reports.models import Report
-from .models import Project,Environment,ApiData,Query_params
-from .serializers import ProjectSerializer, EnvironmentViewSet, ApiDataViewSet, Query_paramsViewSet
+from .models import project,environment,apiData,query_params
+from .serializers import ProjectSerializer, EnvironmentSerializer, ApiDataSerializer, Query_paramsSerializer
 import os
 import subprocess
 from django.http import JsonResponse
 from datetime import datetime
-import requests
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = Project.objects.all()
+    queryset = project.objects.all()
     serializer_class = ProjectSerializer
 
 
 class EnvironmentViewSet(viewsets.ModelViewSet):
-    queryset = Environment.objects.all()
+    queryset = environment.objects.all()
     serializer_class = EnvironmentSerializer
 
 
 class ApiDataViewSet(viewsets.ModelViewSet):
-    queryset = ApiData.objects.all()
+    queryset = apiData.objects.all()
     serializer_class = ApiDataSerializer
 
 
 class Query_paramsViewSet(viewsets.ModelViewSet):
-    queryset = Query_params.objects.all()
+    queryset = query_params.objects.all()
     serializer_class = Query_paramsSerializer
 
 

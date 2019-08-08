@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Environment,ApiData,Query_params
+from .models import project, environment,apiData,query_params
 
 
 
@@ -19,9 +19,9 @@ class Query_paramsAdmin(admin.ModelAdmin):
     list_display = ["environment", "key","value" ]
 
 
-admin.site.register(Project,ProjectAdmin)
-admin.site.register(Environment,EnvironmentAdmin)
-admin.site.register(ApiData,ApiDataAdmin)
-admin.site.register( Query_params, Query_paramsAdmin)
+admin.site.register(project,ProjectAdmin)
+admin.site.register(environment,EnvironmentAdmin)
+admin.site.register(apiData,ApiDataAdmin)
+admin.site.register( query_params, Query_paramsAdmin)
 
 

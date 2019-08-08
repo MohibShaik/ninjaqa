@@ -16,6 +16,9 @@ Including another URLconf
 from django.views.generic import TemplateView
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework import routers
+from API_TESTING.views import ProjectViewSet,EnvironmentViewSet,ApiDataViewSet,Query_paramsViewSet
+
 from reports.views import  run_test_case, runs,runsuite
 
 # from API_TESTING.views import test
@@ -24,18 +27,29 @@ admin.site.site_title = "QA-Ninja"
 admin.site.index_title = ""
 
 
+router = routers.DefaultRouter()
+
+
+router.register('project', ProjectViewSet)
+router.register('environment', EnvironmentViewSet)
+router.register('apiData', ApiDataViewSet)
+router.register('query_params', Query_paramsViewSet)
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api-auth/', include('rest_framework.urls'))
     # Original Template taken from https://github.com/gkushang/cucumber-html-reporter
     path('template/', TemplateView.as_view(template_name='cucumber_report_bootstrap.html')),
-    path('', runs,name= 'Home'),
+    # path('', runs,name= 'Home'),
     path('runs/', runs,name= 'Home'),
     path('runs/<run_id>', runs,name= 'Home'),
     path('run/', run_test_case,name= 'run_test_case'),
     path('runsuite/', runsuite,name= 'runsuite'),
     # path('test/<run_id>',test,name='test'),
-    path('api/', include('reporting.API_TESTING.urls')),
+     path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
     
