@@ -39,15 +39,13 @@ router.register('query_params', Query_paramsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls'))
+    
     # Original Template taken from https://github.com/gkushang/cucumber-html-reporter
     path('template/', TemplateView.as_view(template_name='cucumber_report_bootstrap.html')),
-    # path('', runs,name= 'Home'),
     path('runs/', runs,name= 'Home'),
     path('runs/<run_id>', runs,name= 'Home'),
     path('run/', run_test_case,name= 'run_test_case'),
     path('runsuite/', runsuite,name= 'runsuite'),
-    # path('test/<run_id>',test,name='test'),
      path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

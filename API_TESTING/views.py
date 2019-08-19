@@ -14,13 +14,18 @@ from rest_framework import status
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
-    queryset = project.objects.all()
+    
     serializer_class = ProjectSerializer
+    queryset = project.objects.all()
+
+
+    
 
 
 class EnvironmentViewSet(viewsets.ModelViewSet):
     queryset = environment.objects.all()
     serializer_class = EnvironmentSerializer
+
 
 
 class ApiDataViewSet(viewsets.ModelViewSet):

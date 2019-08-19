@@ -29,13 +29,16 @@ class environment(models.Model):
     environment =models.CharField(max_length=10, choices=ENVIRONMENT_TYPE_CHOICES)
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     base_url = models.URLField(max_length=256)
+    
+
     def __str__(self):
-        return self.base_url
+        return self.environment
 
 
 class apiData(models.Model):
     api_endpoint=models.CharField(max_length=100)
     request_method=models.CharField(max_length=10, choices=REQUEST_TYPE)
+    
     def __str__(self):
 
         return'{} {}'.format(self.api_endpoint, self.request_method)
