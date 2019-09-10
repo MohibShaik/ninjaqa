@@ -7,7 +7,7 @@ from django.urls import path
 
 urlpatterns = [
 
-    path('api_test', views.get_data)
+    path('api_test/', views.get_data)
 
 
 

@@ -1,39 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<style>
+  :root {
+    --bg-color: white;
+    --fg-color: black;
+    --ac-color: rgb(67, 67, 201);
+    --err-color: white;
+  }
+
+  * {
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    font-family: 'Poppins', 'Roboto', 'Noto', sans-serif;
+  }
+
+  ::selection {
+    background-color: var(--ac-color);
+    color: var(--bg-color);
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  a {
+    display: inline-flex;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  body {
+    background-color: #9b9b9b1f;
+    color: var(--fg-color);
+    font-weight: 500;
+    line-height: 1.5;
+    animation: fadein .2s;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  header,
+  footer {
+    display: flex;
+    padding: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    color: #4a90e2f0;
+  }
+
+  main {
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  button {
+    margin: 4px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #57b5f9;
+    ;
+    color: var(--bg-color);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  fieldset {
+    margin: 16px 0;
+    border: 2px solid var(--fg-color);
+    border-radius: 4px;
+  }
+
+  legend {
+    color: var(--fg-color);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  fieldset textarea {
+    resize: vertical;
+  }
+
+  fieldset.request {
+    border-color: #57b5f9;
+  }
+
+  fieldset.request legend {
+    color: #57b5f9;
+  }
+
+  fieldset.history {
+    border-color: #9B9B9B;
+  }
+
+  fieldset.history legend {
+    color: #9B9B9B;
+  }
+
+  fieldset.authentication {
+    border-color: #B8E986;
+  }
+
+  fieldset.authentication legend {
+    color: #B8E986;
+  }
+
+  fieldset.parameters {
+    border-color: #50E3C2;
+  }
+
+  fieldset.parameters legend {
+    color: #50E3C2;
+  }
+
+  fieldset.reqbody {
+    border-color: #4A90E2;
+  }
+
+  fieldset.reqbody legend {
+    color: #4A90E2;
+  }
+
+  fieldset.response {
+    border-color: #C198FB;
+  }
+
+  fieldset.response legend {
+    color: #C198FB;
+  }
+
+  .hidden .collapsible {
+    display: none;
+  }
+
+  select,
+  input,
+  option,
+  textarea {
+    margin: 4px;
+    padding: 8px 16px;
+    width: calc(100% - 8px);
+    border-radius: 4px;
+    background-color: white;
+    color: var(--fg-color);
+    font-weight: 700;
+    font-size: 18px;
+    font-family: monospace;
+  }
+
+  .error {
+    background-color: var(--err-color);
+  }
+
+  .disabled {
+    background-color: var(--err-color);
+    color: rgb(29, 29, 138);
+  }
+
+  label {
+    padding: 4px;
+  }
+
+  ul,
+  ol {
+    display: flex;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  ul li,
+  ol li {
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  @media (max-width: 720px) {
+
+    ul,
+    ol {
+      flex-direction: column;
+    }
+
+    ul li,
+    ol li {
+      display: flex;
+    }
+  }
+</style>
+
+
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+  <title>QA-NINJA</title>
+  <meta name="description"
+    content="The Postwoman API request builder helps you create your requests faster, saving you precious time on your development.">
+  <link rel="icon" href="favicon.ico">
+  <meta itemprop="name" content="Postwoman - API request builder">
+  <meta itemprop="description"
+    content="The Postwoman API request builder helps you create your requests faster, saving you precious time on your development.">
+  <meta itemprop="image" content="icons/icon-192x192.png">
+
+  <!-- Web Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap" rel="stylesheet">
+  <!-- <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }).catch(function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script> -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
 </head>
+
 <body>
-    <div class="container" style="color:green">
-     <h1>QA NINJA</h1>
-    </div>
-<div class="container">
-    <h4>Request Builder</h4>
-    <br>
- <form method="post" action="">
-  {% csrf_token %}
+  <main id="app">
+    <header>
+      <div>
+        <a href="">
+          <h1 class="logo"><img src="C:\Users\Mohib Shaik\Desktop\logo.png" alt=""
+              style="height: 30px; margin-right: 14px">QA-NINJA</h1>
+        </a>
+        <h3>Quality is not an act,it is a habit</h3>
+      </div>
+    </header>
+    <fieldset class="request" ref="request">
+      <legend v-on:click="collapse">Request ↕</legend>
+      <div class="collapsible">
+        <ul>
+          <li>
+            <label for="method">Method</label>
+            <select v-model="method">
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>DELETE</option>
 
-     {{ form.username.errors }}
-<label for="id_Url">URL:</label>
-{{ form.username }}<br />
+            </select>
+          </li>
+          <li>
+            {{ form.URL.errors }}
+            {{ form.URL.label_tag }}
+            {{ form.URL }}
+          </li>
 
-{{ form.password.errors }}
-<label for="id_password">Password:</label>
-{{ form.password }}
-
-
-
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-
-
-</div>
-
+           <li>
+            {{ form.PATH.errors }}
+            {{ form.PATH.label_tag }}
+            {{ form.PATH }}
+          </li>
+          <li>
+            <label for="action">&nbsp;</label>
+            <button type="submit"> SEND </button>
+          </li>
+        </ul>
+      </div>
+    </fieldset>
+    {% comment %} <fieldset class="reqbody" v-if="method === 'POST' || method === 'PUT'">
+      <legend v-on:click="collapse">Request Body ↕</legend>
+      <div class="collapsible">
+        <ul>
+          <li>
+            <label>Content Type</label>
+            <select v-model="contentType">
+              <option>application/json</option>
+              <option>www-form/urlencoded</option>
+            </select>
+          </li>
+        </ul>
+        <ol v-for="(param, index) in bodyParams">
+          <li>
+            <label :for="'bparam'+index">Key {{index + 1}}</label>
+            <input :name="'bparam'+index" v-model="param.key">
+          </li>
+          <li>
+            <label :for="'bvalue'+index">Value {{index + 1}}</label>
+            <input :name="'bvalue'+index" v-model="param.value">
+          </li>
+          <li>
+            <label for="request">&nbsp;</label>
+            <button name="request" @click="removeRequestBodyParam(index)">Remove</button>
+          </li>
+        </ol>
+        <ul>
+          <li>
+            <label for="addrequest">Action</label>
+            <button name="addrequest" @click="addRequestBodyParam">Add</button>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <label for="request">Parameter List</label>
+            <textarea name="request" rows="1" readonly>{{rawRequestBody || '(add at least one parameter)'}}</textarea>
+          </li>
+        </ul>
+      </div>
+    </fieldset>
+    <fieldset class="authentication hidden">
+      <legend v-on:click="collapse">Authentication ↕</legend>
+      <div class="collapsible">
+        <ul>
+          <li>
+            <label for="auth">Authentication Type</label>
+            <select v-model="auth">
+              <option>None</option>
+              <option>Basic</option>
+            </select>
+          </li>
+        </ul>
+        <ul v-if="auth === 'Basic'">
+          <li>
+            <label for="http_basic_user">User</label>
+            <input v-model="httpUser">
+          </li>
+          <li>
+            <label for="http_basic_passwd">Password</label>
+            <input v-model="httpPassword" type="password">
+          </li>
+        </ul>
+      </div>
+    </fieldset>
+    <fieldset class="parameters hidden">
+      <legend v-on:click="collapse">Parameters ↕</legend>
+      <div class="collapsible">
+        <ol v-for="(param, index) in params">
+          <li>
+            <label :for="'param'+index">Key {{index + 1}}</label>
+            <input :name="'param'+index" v-model="param.key">
+          </li>
+          <li>
+            <label :for="'value'+index">Value {{index + 1}}</label>
+            <input :name="'value'+index" v-model="param.value">
+          </li>
+          <li>
+            <label for="param">&nbsp;</label>
+            <button name="param" @click="removeRequestParam(index)">Remove</button>
+          </li>
+        </ol>
+        <ul>
+          <li>
+            <label for="add">Action</label>
+            <button name="add" @click="addRequestParam">Add</button>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <label for="request">Parameter List</label>
+            <textarea name="request" rows="1" readonly>{{queryString || '(add at least one parameter)'}}</textarea>
+          </li>
+        </ul>
+      </div>
+    </fieldset>
+    <fieldset class="response" id="response" ref="response">
+      <legend v-on:click="collapse">Response ↕</legend>
+      <div class="collapsible">
+        <ul>
+          <li>
+            <label for="status">status</label>
+            <input name="status" type="text" readonly :value="response.status || '(waiting to send request)'">
+          </li>
+        </ul>
+        <ul v-for="(value, key) in response.headers">
+          <li>
+            <label for="value">{{key}}</label>
+            <input name="value" :value="value" readonly>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <label for="body">response</label>
+            <textarea name="body" rows="6" readonly>{{response.body || '(waiting to send request)'}}</textarea>
+          </li>
+        </ul>
+      </div>
+    </fieldset>
+    <fieldset class="history">
+      <legend v-on:click="collapse">History ↕</legend>
+      <div class="collapsible">
+        <ul>
+          <li>
+            <button v-bind:class="{ disabled: noHistoryToClear }" v-on:click="clearHistory">Clear
+              History</button>
+          </li>
+        </ul>
+        <ul v-for="entry in history">
+          <li>
+            <label for="time">Time</label>
+            <input name="time" type="text" readonly :value="entry.time">
+          </li>
+          <li>
+            <label for="name">Method</label>
+            <input name="name" type="text" readonly :value="entry.method">
+          </li>
+          <li>
+            <label for="name">URL</label>
+            <input name="name" type="text" readonly :value="entry.url">
+          </li>
+          <li>
+            <label for="name">Path</label>
+            <input name="name" type="text" readonly :value="entry.path">
+          </li>
+          <li>
+            <label for="delete">&nbsp;</label>
+            <button name="delete" @click="deleteHistory(entry)">Delete</button>
+          </li>
+          <li>
+            <label for="use">&nbsp;</label>
+            <button name="use" @click="useHistory(entry)">Use</button>
+          </li>
+        </ul>
+      </div>
+    </fieldset> {% endcomment %}
+  </main>
+  <script src="script.js"></script>
+  <script>
+    let pwaInstalled = localStorage.getItem('pwaInstalled') == 'yes'
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      localStorage.setItem('pwaInstalled', 'yes')
+      pwaInstalled = true
+    }
+    if (window.navigator.standalone === true) {
+      localStorage.setItem('pwaInstalled', 'yes')
+      pwaInstalled = true
+    }
+    if (pwaInstalled) {
+      document.getElementById('installPWA').style.display = 'none'
+    } else {
+      document.getElementById('installPWA').style.display = 'block'
+    }
+    let deferredPrompt = null
+    window.addEventListener('beforeinstallprompt', (e) => {
+      deferredPrompt = e
+    })
+    async function installPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt()
+        deferredPrompt.userChoice.then(({
+          outcome
+        }) => {
+          if (outcome === 'accepted') {
+            console.log('Your PWA has been installed')
+          } else {
+            console.log('User chose to not install your PWA')
+          }
+          deferredPrompt = null
+        })
+      }
+    }
+    window.addEventListener('appinstalled', (evt) => {
+      localStorage.setItem('pwaInstalled', 'yes')
+      pwaInstalled = true
+      document.getElementById('installPWA').style.display = 'none'
+    })
+  </script>
 </body>
+
 </html>

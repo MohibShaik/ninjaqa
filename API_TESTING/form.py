@@ -17,13 +17,14 @@ Method_choices=[
 # API Form
 class APIForm(forms.Form):
     Method = forms.ChoiceField(choices = Method_choices)
-    Url = forms.URLField(label='url', max_length=100)
-    Api = forms.CharField()
+    URL = forms.URLField(label='URL', max_length=100)
+    PATH = forms.CharField(max_length=250)
+
 
     def clean(self):
        cleaned_data = super(APIForm, self).clean()
-       Url = cleaned_data.get('Url')
-       Api = cleaned_data.get('Api')
+       URL = cleaned_data.get('URL')
+       PATH= cleaned_data.get('PATH')
 
 
    
