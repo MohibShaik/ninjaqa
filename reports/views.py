@@ -24,7 +24,7 @@ def runs(request, run_id=None):
     report=report_json=None
     failed_features=passed_features=failed_scenarios=passed_scenarios=notdefined_scenarios=skipped_secenarios=0
     
-    bdd_path = os.path.abspath(".").split("automation-clean")[0]+"/automation-clean/automation-clean/bdd_selenium/"
+    bdd_path = os.path.abspath(".").split("ninjaqa")[0]+"ninjaqa/bdd_selenium/"
     print(bdd_path)
     if run_id:
         report = Report.objects.get(pk=run_id)

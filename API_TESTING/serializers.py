@@ -1,26 +1,26 @@
 from rest_framework import serializers
-from .models import project,environment,apiData,query_params
+from .models import Project,Environment,ApiData,Query_params
 
 
 class EnvironmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = environment
-        fields=('__all__')
+        model = Environment
+        fields=('id', 'url', 'environment','project', 'base_url')
 
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
-        model = project
+        model = Project
         fields=('__all__')
 
 
 class ApiDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = apiData
+        model = ApiData
         fields = ('__all__')
 
 
 class Query_paramsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = query_params
+        model = Query_params
         fields = ('__all__')

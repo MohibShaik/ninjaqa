@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\Mohib Shaik\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe"
+    "python.pythonPath": "dev\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true
 }

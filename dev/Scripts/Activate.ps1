@@ -27,7 +27,7 @@ function global:deactivate ([switch]$NonDestructive) {
 
 deactivate -nondestructive
 
-$env:VIRTUAL_ENV="C:\Users\Mohib\Downloads\automation-clean (2)\automation-clean\automation-clean\dev"
+$env:VIRTUAL_ENV="D:\workspace\ninjaqa\dev"
 
 if (! $env:VIRTUAL_ENV_DISABLE_PROMPT) {
     # Set the prompt to include the env name

@@ -27,7 +27,8 @@ global_environment = models.Environment.objects.get(project=global_project, envi
 global_driver_obj = models.Driver.objects.get(name=environment['driver'])
 if global_driver_obj.browser=='chrome':
      global_driver = webdriver.Chrome("../"+global_driver_obj.driver_file.name)
-# TODO : Add more browsers     
+# TODO : Add more browsers  
+   
 global_var={
      'elements':{},
      'data':{}
@@ -94,6 +95,7 @@ def clear_element(element,wait_after_click=None):
 @given(u'open {page} page')
 def step_impl(context ,page):
      page = models.Page.objects.get(name=page, project=global_project)
+     print(page)
      url = global_environment.base_url + page.relative_path
      global_driver.get(url)
 #       load login  page elements and data 

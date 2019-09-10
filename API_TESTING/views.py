@@ -2,63 +2,48 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.http import HttpResponse
 import json
-from .models import project,environment,apiData,query_params
+from .models import Project, Environment, ApiData, Query_params
 from .serializers import ProjectSerializer, EnvironmentSerializer, ApiDataSerializer, Query_paramsSerializer
 import os
 import subprocess
 from django.http import JsonResponse
-from datetime import datetime
-from rest_framework import viewsets
-from rest_framework.views import APIView
-from rest_framework import status
+# from datetime import datetime
+# from rest_framework import viewsets
+# from rest_framework.views import APIView
+# from rest_framework import status
+from .form import APIForm
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-    
-    serializer_class = ProjectSerializer
-    queryset = project.objects.all()
+def get_data(request):
+    if request.method == 'POST':
+        form = APIForm(request.POST)
+        if form.is_valid():
+            pass
 
+    form = APIForm()
 
-    
+    return render(request, 'api_testing.html', {'form': form})
 
-
-class EnvironmentViewSet(viewsets.ModelViewSet):
-    queryset = environment.objects.all()
-    serializer_class = EnvironmentSerializer
-
-
-
-class ApiDataViewSet(viewsets.ModelViewSet):
-    queryset = apiData.objects.all()
-    serializer_class = ApiDataSerializer
-
-
-class Query_paramsViewSet(viewsets.ModelViewSet):
-    queryset = query_params.objects.all()
-    serializer_class = Query_paramsSerializer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Using of DRF
+#
+# class ProjectViewSet(viewsets.ModelViewSet):
+#
+#     serializer_class = ProjectSerializer
+#     queryset = Project.objects.all()
+#
+# class EnvironmentViewSet(viewsets.ModelViewSet):
+#     queryset = Environment.objects.all()
+#     serializer_class = EnvironmentSerializer
+#
+#
+# class ApiDataViewSet(viewsets.ModelViewSet):
+#     queryset = ApiData.objects.all()
+#     serializer_class = ApiDataSerializer
+#
+# class Query_paramsViewSet(viewsets.ModelViewSet):
+#     queryset = Query_params.objects.all()
+#     serializer_class = Query_paramsSerializer
+# #
 
 
 # def test(request,run_id=None):
@@ -76,17 +61,15 @@ class Query_paramsViewSet(viewsets.ModelViewSet):
 
 #     P= Query_params.objects.get(pk=run_id)
 #     PARAMS=str(P)
-    
 
 
-    
 #     URL = b_url+end_point
 #     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 #     print(URL)
 #     if request.method == 'GET':
 #         response = requests.get(url=URL, params=PARAMS)
 #         json_data=response.json()
-        
+
 #     elif request.method=="POST":
 #         response = request.POST(url=base_url)
 #         json_data = response.json()

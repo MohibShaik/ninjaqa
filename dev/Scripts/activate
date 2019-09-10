@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Mohib\Downloads\automation-clean (2)\automation-clean\automation-clean\dev"
+VIRTUAL_ENV="D:\workspace\ninjaqa\dev"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
